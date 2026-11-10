@@ -82,19 +82,9 @@ Guest photos (the original and the recolored preview) are stored on disk in `UPL
 
 **In production, `UPLOAD_DIR` must be on a persistent volume**, or photos are lost on every deploy. Moving to Cloudflare R2 later only means changing `services/uploads.ts`.
 
-## Deploying (Railway or Render)
+## Deploying
 
-Same approach as the massage app: one Docker image (Express serves the API and the built PWA, and applies migrations on start). Use a managed PostgreSQL with daily backups and an always-on plan.
-
-Environment variables:
-
-- `DATABASE_URL`, `SESSION_SECRET` (`openssl rand -hex 32`), `SITE_URL` (public https URL)
-- `TURNSTILE_SECRET_KEY` and build-time `VITE_TURNSTILE_SITE_KEY` (Cloudflare Turnstile)
-- `UPLOAD_DIR`: path of the persistent volume
-- `RETENTION_DAYS`: how long to keep requests and photos (default 365; `0` = forever)
-- Optional: `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `VAPID_SUBJECT` (push) and `RESEND_API_KEY`, `EMAIL_FROM`, `ADMIN_NOTIFY_EMAIL`, `ADMIN_NOTIFY_LANG` (email)
-
-Then create the admin once: `node apps/api/dist/create-admin.js --email you@example.com --name "Your name"` (set `ADMIN_PASSWORD` if the shell isn't interactive).
+Step-by-step guide for Render (Singapore) using the `render.yaml` Blueprint: [docs/DEPLOY.md](docs/DEPLOY.md). It is one Docker image (Express serves the API and the built PWA, and applies migrations on start), a PostgreSQL database and a disk for photos. CI starts the image against a database on every push.
 
 ## Still to do before real use
 

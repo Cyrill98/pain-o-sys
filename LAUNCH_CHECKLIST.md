@@ -21,17 +21,17 @@ Live camera is **deferred** (see [LIVE_CAMERA_PLAN.md](LIVE_CAMERA_PLAN.md)). La
 
 ## B. Work I should do before launch
 
-|     | Item                                                                                         | Why                                                                                                                                                                                         |
-| --- | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [ ] | **Admin can delete a request and its photos**                                                | There is no delete today. A client may ask for removal under PDPA, and photos of people's homes should not stay forever.                                                                    |
-| [ ] | **Automatic retention cleanup** of requests and photos older than the chosen period          | Matches what the privacy notice promises.                                                                                                                                                   |
-| [ ] | **Create a git repository** and commit, with CI (typecheck, lint, tests, build)              | The project is not under version control yet.                                                                                                                                               |
-| [ ] | **Docker build tested end to end**                                                           | CI now builds the production image on every push (about 390 MB). Still untested: running the image against a database, and `docker compose up` locally (Docker didn't respond on this Mac). |
-| [ ] | **API tests against a real database** for the request flow, uploads and admin routes         | Today only pure functions have tests.                                                                                                                                                       |
-| [ ] | Long WhatsApp messages: test a request with 12 areas                                         | `wa.me` links have a length limit. If exceeded, the message should shorten (the full details are on the admin page anyway).                                                                 |
-| [ ] | Handle "WhatsApp not set up yet" clearly on the guest side                                   | Already shows a note; check wording with the real flow.                                                                                                                                     |
-| [ ] | Trim the build output (the runtime files are in the image twice, about 27 MB extra)          | Smaller image, faster deploys. Optional.                                                                                                                                                    |
-| [ ] | Basic usage counts for the success metrics (visitors who open the visualizer, requests sent) | Nothing records these today. A privacy-friendly analytics tool or a few server counters.                                                                                                    |
+|     | Item                                                                                         | Why                                                                                                                                                                                                                                          |
+| --- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [ ] | **Admin can delete a request and its photos**                                                | There is no delete today. A client may ask for removal under PDPA, and photos of people's homes should not stay forever.                                                                                                                     |
+| [ ] | **Automatic retention cleanup** of requests and photos older than the chosen period          | Matches what the privacy notice promises.                                                                                                                                                                                                    |
+| [ ] | **Create a git repository** and commit, with CI (typecheck, lint, tests, build)              | The project is not under version control yet.                                                                                                                                                                                                |
+| [ ] | **Docker build tested end to end**                                                           | CI builds the image and starts it against Postgres with a root-owned disk on every push, checking migrations, uploads, the security policy and the model files. Not tested: `docker compose up` locally (Docker didn't respond on this Mac). |
+| [ ] | **API tests against a real database** for the request flow, uploads and admin routes         | Today only pure functions have tests.                                                                                                                                                                                                        |
+| [ ] | Long WhatsApp messages: test a request with 12 areas                                         | `wa.me` links have a length limit. If exceeded, the message should shorten (the full details are on the admin page anyway).                                                                                                                  |
+| [ ] | Handle "WhatsApp not set up yet" clearly on the guest side                                   | Already shows a note; check wording with the real flow.                                                                                                                                                                                      |
+| [ ] | Trim the build output (the runtime files are in the image twice, about 27 MB extra)          | Smaller image, faster deploys. Optional.                                                                                                                                                                                                     |
+| [ ] | Basic usage counts for the success metrics (visitors who open the visualizer, requests sent) | Nothing records these today. A privacy-friendly analytics tool or a few server counters.                                                                                                                                                     |
 
 Already done: `.dockerignore` now excludes the test photos and the `data` folder.
 
@@ -56,20 +56,21 @@ Test on at least **one Android phone and one iPhone**, with the production build
 
 ## D. Set up and deploy
 
-|     | Step                                                                                                                                   |
-| --- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| [ ] | Create the hosting account (Railway or Render) with an always-on plan and managed PostgreSQL, **daily backups on**                     |
-| [ ] | Persistent volume for photos, and set `UPLOAD_DIR` to its path                                                                         |
-| [ ] | Set environment variables: `DATABASE_URL`, `SESSION_SECRET` (`openssl rand -hex 32`), `SITE_URL` (https), `UPLOAD_DIR`                 |
-| [ ] | Cloudflare Turnstile: create the widget for the domain, set `TURNSTILE_SECRET_KEY` and the build-time `VITE_TURNSTILE_SITE_KEY`        |
-| [ ] | Web push: generate VAPID keys (`npx web-push generate-vapid-keys`), set `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `VAPID_SUBJECT`       |
-| [ ] | Optional email notifications: `RESEND_API_KEY`, `EMAIL_FROM`, `ADMIN_NOTIFY_EMAIL`, `ADMIN_NOTIFY_LANG`                                |
-| [ ] | Point the domain at the host and confirm HTTPS                                                                                         |
-| [ ] | Run migrations (automatic on start) and create the admin: `node apps/api/dist/create-admin.js --email ... --name ...`                  |
-| [ ] | Sign in, set business name and WhatsApp number, load the colors                                                                        |
-| [ ] | Confirm the security headers and that the model and runtime load only from your own domain (browser console shows no blocked requests) |
-| [ ] | **Restore a database backup once** to prove it works                                                                                   |
-| [ ] | Uptime monitoring on the home page and `/api/health`; error log access                                                                 |
+Follow [docs/DEPLOY.md](docs/DEPLOY.md). `render.yaml` already describes the services; the steps below are what only you can do.
+
+|     | Step                                                                                                                                                                                    |
+| --- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [ ] | Create the Render account and apply the Blueprint (web service, PostgreSQL, 5 GB photo disk, Singapore)                                                                                 |
+| [ ] | Enter the values Render asks for: `SITE_URL` (https, final domain), the Turnstile keys, the push keys. The database, disk, session secret and retention period are set by the Blueprint |
+| [ ] | Cloudflare Turnstile: create the widget for the domain, set `TURNSTILE_SECRET_KEY` and `TURNSTILE_SITE_KEY`                                                                             |
+| [ ] | Web push: generate VAPID keys (`npx web-push generate-vapid-keys`), set `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `VAPID_SUBJECT`                                                        |
+| [ ] | Optional email notifications: `RESEND_API_KEY`, `EMAIL_FROM`, `ADMIN_NOTIFY_EMAIL`, `ADMIN_NOTIFY_LANG`                                                                                 |
+| [ ] | Point the domain at the host and confirm HTTPS                                                                                                                                          |
+| [ ] | Run migrations (automatic on start) and create the admin: `node apps/api/dist/create-admin.js --email ... --name ...`                                                                   |
+| [ ] | Sign in, set business name and WhatsApp number, load the colors                                                                                                                         |
+| [ ] | Confirm the security headers and that the model and runtime load only from your own domain (browser console shows no blocked requests)                                                  |
+| [ ] | **Restore a database backup once** to prove it works                                                                                                                                    |
+| [ ] | Uptime monitoring on the home page and `/api/health`; error log access                                                                                                                  |
 
 ## E. Launch day
 
