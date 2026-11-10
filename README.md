@@ -50,6 +50,15 @@ Open http://localhost:5173. Sign in at `/en/admin/login`, then go to **Settings*
 | `npm run db:generate`                 | Generate a migration after editing `db/schema.ts`             |
 | `npm run create-admin -- --email <e>` | Create the (single) admin account; asks for a password        |
 
+## Continuous integration
+
+GitHub Actions (`.github/workflows/ci.yml`) runs on every push to `main` and every pull request:
+
+- **Checks, tests and build:** formatting, lint, typecheck, unit tests, database tests (against a Postgres service) and the production build.
+- **Docker image builds:** builds the production image to catch Dockerfile problems early.
+
+The wall-selection model files are cached between runs.
+
 ## Wall selection
 
 Tapping a wall uses **SlimSAM** (`Xenova/slimsam-77-uniform`, Apache 2.0), a small Segment-Anything model that runs in the visitor's browser with ONNX Runtime (WebGPU when available, WebAssembly otherwise). Findings and test results are in [PHASE0.md](PHASE0.md).

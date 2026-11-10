@@ -32,16 +32,16 @@ jobs:
           --health-timeout 3s
           --health-retries 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
 
       # The wall-selection model files (about 33 MB) are downloaded by the build; keep them
       # between runs. The key changes when the pinned model revision changes.
-      - uses: actions/cache@v4
+      - uses: actions/cache@v6
         with:
           path: apps/web/public/models
           key: models-${{ hashFiles('apps/web/scripts/fetch-models.mjs') }}
@@ -64,7 +64,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Build the production image
         run: docker build --tag painting-system:ci .
       - name: Image size
