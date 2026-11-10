@@ -133,7 +133,7 @@ jobs:
             --data-binary @"$RUNNER_TEMP/test.png")
           [ "$code" = "201" ] || fail "upload returned $code"
           ls "$RUNNER_TEMP/disk/uploads" | grep -q . || fail "photo not on disk"
-          docker top app -eo user,args | grep "[a]pps/api/dist/index.js" | grep -vq '^root' || fail "app runs as root"
+          docker top app -eo pid,user,args | grep "[a]pps/api/dist/index.js" | tee /dev/stderr | awk '{print $2}' | grep -qv '^root$' || fail "app runs as root"
           echo "Smoke test passed"
 
       - name: Container logs
