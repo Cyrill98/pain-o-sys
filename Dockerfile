@@ -9,9 +9,6 @@ COPY apps/web/package.json apps/web/
 COPY packages/shared/package.json packages/shared/
 RUN npm ci
 COPY . .
-# Public values baked into the web app at build time (Vite). Pass with --build-arg / host settings.
-ARG VITE_TURNSTILE_SITE_KEY
-ENV VITE_TURNSTILE_SITE_KEY=$VITE_TURNSTILE_SITE_KEY
 RUN npm run build
 
 # ── Runtime ──────────────────────────────────────────
@@ -27,7 +24,9 @@ COPY packages/shared/package.json packages/shared/
 RUN npm ci --omit=dev --workspace=@app/api && npm cache clean --force
 COPY --from=build /app/apps/api/dist apps/api/dist
 COPY --from=build /app/apps/web/dist apps/web/dist
-USER node
+COPY --chmod=755 docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 EXPOSE 3000
+# Runs as root only long enough to fix the photo folder's ownership, then becomes "node".
+ENTRYPOINT ["docker-entrypoint.sh"]
 # Apply pending migrations, then start the server (single instance).
 CMD ["sh", "-c", "node apps/api/dist/migrate.js && exec node apps/api/dist/index.js"]

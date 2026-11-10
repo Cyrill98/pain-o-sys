@@ -1,0 +1,61 @@
+# Render Blueprint: one web service (the Docker image) plus a Postgres database, both in
+# Singapore (closest to Malaysia). See docs/DEPLOY.md for the full step-by-step guide.
+#
+# Plan names are the ones in Render's current blueprint documentation. If Render rejects one
+# when you create the Blueprint, pick the nearest plan in the dashboard. A paid web service is
+# required because the photo disk is not available on free instances.
+
+databases:
+  - name: painting-db
+    region: singapore
+    plan: 0.1c-256mb
+    databaseName: painting
+    user: painting
+    # Only the web service (over Render's private network) may connect.
+    ipAllowList: []
+
+services:
+  - type: web
+    name: painting
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    region: singapore
+    plan: 0.5c-512mb
+    healthCheckPath: /api/health
+    # Deploy only after the GitHub checks (CI) pass.
+    autoDeployTrigger: checksPass
+    # Guest photos live here. Render snapshots the disk daily and keeps snapshots for 7 days.
+    # A disk limits the service to one instance and brief downtime during deploys, which is fine
+    # for a single painter.
+    disk:
+      name: photos
+      mountPath: /data
+      sizeGB: 5
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: painting-db
+          property: connectionString
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: UPLOAD_DIR
+        value: /data/uploads
+      - key: RETENTION_DAYS
+        value: '365'
+      # The public https address, for example https://paint.example.my (no trailing slash).
+      # Until the custom domain works, use the https://....onrender.com address Render shows.
+      - key: SITE_URL
+        sync: false
+      # Cloudflare Turnstile (spam check). Create a widget for the domain at
+      # https://dash.cloudflare.com/?to=/:account/turnstile
+      - key: TURNSTILE_SECRET_KEY
+        sync: false
+      - key: TURNSTILE_SITE_KEY
+        sync: false
+      # Web push for new-request notifications. Generate with: npx web-push generate-vapid-keys
+      - key: VAPID_PUBLIC_KEY
+        sync: false
+      - key: VAPID_PRIVATE_KEY
+        sync: false
+      - key: VAPID_SUBJECT
+        sync: false

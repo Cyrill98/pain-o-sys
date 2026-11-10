@@ -1,5 +1,6 @@
 import { eq } from 'drizzle-orm';
 import type { AdminSettings, PublicSettings, SettingsPatch } from '@app/shared';
+import { config } from '../config.js';
 import { db, schema } from '../db/index.js';
 
 /** The single settings row (created by the first migration). */
@@ -13,7 +14,11 @@ export async function getSettings(): Promise<AdminSettings> {
 
 export async function getPublicSettings(): Promise<PublicSettings> {
   const s = await getSettings();
-  return { businessName: s.businessName, whatsappReady: s.whatsappNumber !== '' };
+  return {
+    businessName: s.businessName,
+    whatsappReady: s.whatsappNumber !== '',
+    turnstileSiteKey: config.TURNSTILE_SITE_KEY,
+  };
 }
 
 export async function updateSettings(patch: SettingsPatch): Promise<AdminSettings> {

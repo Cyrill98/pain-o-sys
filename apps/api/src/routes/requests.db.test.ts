@@ -21,6 +21,17 @@ async function uploadPhoto() {
   return res.body.id as string;
 }
 
+describe('public settings', () => {
+  it('shares the business name, whether WhatsApp is ready, and the spam-check site key', async () => {
+    const res = await request(app).get('/api/settings/public').expect(200);
+    expect(res.body).toEqual({
+      businessName: 'Painting Services',
+      whatsappReady: false,
+      turnstileSiteKey: null, // not configured in tests
+    });
+  });
+});
+
 describe('guest request flow', () => {
   it('saves a request with photos and returns a WhatsApp link when the number is set', async () => {
     const admin = await signedInAgent(app);

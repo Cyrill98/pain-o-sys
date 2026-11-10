@@ -6,6 +6,8 @@ export const publicSettingsSchema = z.object({
   businessName: z.string(),
   /** True when the admin's WhatsApp number is set, so "send via WhatsApp" works. */
   whatsappReady: z.boolean(),
+  /** Cloudflare Turnstile site key (public). null when spam protection is off (development). */
+  turnstileSiteKey: z.string().nullable(),
 });
 export type PublicSettings = z.infer<typeof publicSettingsSchema>;
 

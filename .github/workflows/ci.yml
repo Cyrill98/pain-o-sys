@@ -60,12 +60,82 @@ jobs:
       - run: npm run build
 
   docker:
-    name: Docker image builds
+    name: Docker image builds and starts
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: painting
+          POSTGRES_PASSWORD: painting
+          POSTGRES_DB: painting
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U painting -d painting"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
     steps:
       - uses: actions/checkout@v7
+
       - name: Build the production image
         run: docker build --tag painting-system:ci .
+
       - name: Image size
         run: docker image ls painting-system:ci
+
+      # Runs the image the way a host would: production mode, a root-owned disk mounted at /data
+      # (like Render's), and a real database. Then checks the things that broke or nearly broke
+      # during development: migrations, the model files, the security policy and photo uploads.
+      - name: Start the image and smoke test it
+        run: |
+          mkdir -p "$RUNNER_TEMP/disk"
+          docker run -d --name app --network host \
+            -e DATABASE_URL=postgres://painting:painting@localhost:5432/painting \
+            -e SESSION_SECRET="$(openssl rand -hex 32)" \
+            -e SITE_URL=http://localhost:3000 \
+            -e PORT=3000 \
+            -e TURNSTILE_SECRET_KEY=dummy-secret \
+            -e TURNSTILE_SITE_KEY=dummy-site-key \
+            -e UPLOAD_DIR=/data/uploads \
+            -v "$RUNNER_TEMP/disk:/data" \
+            painting-system:ci
+
+          for i in $(seq 1 40); do
+            curl -fsS http://localhost:3000/api/health && break
+            sleep 1
+          done
+          echo
+          curl -fsS http://localhost:3000/api/health >/dev/null || { docker logs app; exit 1; }
+
+          fail() { echo "FAILED: $1"; docker logs app; exit 1; }
+
+          # Migrations ran, and the Turnstile site key reaches the browser at run time.
+          curl -fsS http://localhost:3000/api/colors | grep -q '"colors":\[\]' || fail "colors endpoint"
+          curl -fsS http://localhost:3000/api/settings/public | grep -q '"turnstileSiteKey":"dummy-site-key"' || fail "public settings"
+
+          # The app, and a security policy that lets WebAssembly run.
+          code=$(curl -s -o /dev/null -w '%{http_code}' http://localhost:3000/en/request)
+          [ "$code" = "200" ] || fail "app page returned $code"
+          curl -sI http://localhost:3000/en | grep -i '^content-security-policy' | grep -q "wasm-unsafe-eval" || fail "CSP"
+
+          # Self-hosted wall-selection files are in the image.
+          curl -fsS -o /dev/null http://localhost:3000/models/slimsam-77-uniform/onnx/vision_encoder_quantized.onnx || fail "model file"
+          curl -fsS -o /dev/null http://localhost:3000/ort/ort-wasm-simd-threaded.asyncify.wasm || fail "runtime file"
+
+          # Photo upload works on a root-owned disk, and the app is not running as root.
+          printf '\x89PNG\r\n\x1a\n' > "$RUNNER_TEMP/test.png"
+          head -c 64 /dev/zero >> "$RUNNER_TEMP/test.png"
+          code=$(curl -s -o /dev/null -w '%{http_code}' -X POST http://localhost:3000/api/uploads \
+            -H "Origin: http://localhost:3000" -H "Content-Type: image/png" \
+            --data-binary @"$RUNNER_TEMP/test.png")
+          [ "$code" = "201" ] || fail "upload returned $code"
+          ls "$RUNNER_TEMP/disk/uploads" | grep -q . || fail "photo not on disk"
+          docker top app -eo user,args | grep "[a]pps/api/dist/index.js" | grep -vq '^root' || fail "app runs as root"
+          echo "Smoke test passed"
+
+      - name: Container logs
+        if: always()
+        run: docker logs app || true

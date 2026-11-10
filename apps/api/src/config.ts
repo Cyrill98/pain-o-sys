@@ -27,6 +27,8 @@ const envSchema = z
     RETENTION_DAYS: z.coerce.number().int().min(0).default(365),
     /** Cloudflare Turnstile secret. Required in production; when unset in dev/test, skipped. */
     TURNSTILE_SECRET_KEY: z.string().optional(),
+    /** Turnstile site key (public). Sent to the browser by /api/settings/public. */
+    TURNSTILE_SITE_KEY: z.string().optional(),
     /** Web Push (VAPID). Push is off unless both keys are set. */
     VAPID_PUBLIC_KEY: z.string().optional(),
     VAPID_PRIVATE_KEY: z.string().optional(),
@@ -53,6 +55,14 @@ const envSchema = z
         message: 'TURNSTILE_SECRET_KEY is required in production (spam protection)',
       });
     }
+    if (env.NODE_ENV === 'production' && env.TURNSTILE_SECRET_KEY && !env.TURNSTILE_SITE_KEY) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['TURNSTILE_SITE_KEY'],
+        message:
+          'TURNSTILE_SITE_KEY is required in production, or guests could never pass the spam check',
+      });
+    }
     const siteUrl = env.SITE_URL ?? (env.NODE_ENV === 'production' ? '' : 'http://localhost:5173');
     if (env.NODE_ENV === 'production') {
       const url = siteUrl ? new URL(siteUrl) : null;
@@ -71,6 +81,7 @@ const envSchema = z
       SESSION_SECRET: secret,
       UPLOAD_DIR: path.resolve(env.UPLOAD_DIR || path.join(repoRoot, 'data/uploads')),
       TURNSTILE_SECRET_KEY: env.TURNSTILE_SECRET_KEY || null,
+      TURNSTILE_SITE_KEY: env.TURNSTILE_SITE_KEY || null,
     };
   });
 

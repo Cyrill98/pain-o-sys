@@ -25,7 +25,6 @@ import { Switch } from '@/components/ui/switch';
 import { readableOn } from '@/lib/color-utils';
 import { useErrorMessage } from '@/lib/errors';
 import { useLang } from '@/lib/lang';
-import { TURNSTILE_SITE_KEY } from '@/lib/config';
 import {
   createRequest,
   reportWhatsappOpened,
@@ -150,8 +149,11 @@ export function Request() {
 
   const colorOf = (id: string | null): Color | undefined => colors.find((c) => c.id === id);
   const previewCount = areas.filter((a) => a.snapshot).length;
-  const needsToken = Boolean(TURNSTILE_SITE_KEY);
+  // The spam-check key comes from the server, so it can be set without rebuilding the app.
+  const siteKey = settings.data?.turnstileSiteKey ?? null;
+  const needsToken = Boolean(siteKey);
   const canSubmit =
+    settings.isSuccess &&
     contact.name.trim() !== '' &&
     contact.phone.trim() !== '' &&
     consent &&
@@ -611,7 +613,7 @@ export function Request() {
               </span>
             </label>
 
-            <Turnstile onToken={setToken} lang={lang} resetKey={tokenReset} />
+            <Turnstile onToken={setToken} lang={lang} siteKey={siteKey} resetKey={tokenReset} />
 
             {error != null && (
               <p

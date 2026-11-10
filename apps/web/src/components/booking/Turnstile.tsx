@@ -1,6 +1,5 @@
 import { useEffect, useLayoutEffect, useRef } from 'react';
 import type { Language } from '@app/shared';
-import { TURNSTILE_SITE_KEY } from '@/lib/config';
 
 interface TurnstileApi {
   render(
@@ -53,10 +52,13 @@ function loadTurnstile() {
 export function Turnstile({
   onToken,
   lang,
+  siteKey,
   resetKey = 0,
 }: {
   onToken: (token: string) => void;
   lang: Language;
+  /** Public site key from /api/settings/public; null skips the check (development). */
+  siteKey: string | null;
   resetKey?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -66,14 +68,14 @@ export function Turnstile({
   });
 
   useEffect(() => {
-    if (!TURNSTILE_SITE_KEY || !ref.current) return;
+    if (!siteKey || !ref.current) return;
     let widgetId: string | undefined;
     let cancelled = false;
     loadTurnstile()
       .then((api) => {
         if (cancelled || !ref.current) return;
         widgetId = api.render(ref.current, {
-          sitekey: TURNSTILE_SITE_KEY!,
+          sitekey: siteKey,
           callback: (token) => onTokenRef.current(token),
           'expired-callback': () => onTokenRef.current(''),
           'error-callback': () => onTokenRef.current(''),
@@ -87,8 +89,8 @@ export function Turnstile({
       cancelled = true;
       if (widgetId) window.turnstile?.remove(widgetId);
     };
-  }, [lang, resetKey]);
+  }, [lang, siteKey, resetKey]);
 
-  if (!TURNSTILE_SITE_KEY) return null;
+  if (!siteKey) return null;
   return <div ref={ref} className="min-h-16" />;
 }
