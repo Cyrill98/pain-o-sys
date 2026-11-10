@@ -1,0 +1,55 @@
+{
+  "appName": "Painting Quote",
+  "loading": "Loading…",
+  "back": "Back",
+  "next": "Next",
+  "language": {
+    "label": "Language",
+    "short": {
+      "en": "EN",
+      "ms": "BM"
+    },
+    "name": {
+      "en": "English",
+      "ms": "Bahasa Melayu"
+    }
+  },
+  "notFound": {
+    "title": "Page not found",
+    "home": "Go to the home page"
+  },
+  "home": {
+    "headline": "See your walls in a new color before you paint",
+    "sub": "Try our colors on a photo of your own room, then send us your request on WhatsApp for a free quote.",
+    "cta": "Start my quote request",
+    "step1": "Tell us what you want painted",
+    "step2": "Pick colors and preview them on your wall",
+    "step3": "Send the request to us on WhatsApp",
+    "privacy": "Privacy notice"
+  },
+  "pwa": {
+    "offline": "You're offline. Sending a request needs an internet connection.",
+    "update": "A new version is available.",
+    "reload": "Reload"
+  },
+  "push": {
+    "denied": "Notifications are blocked for this site. Allow them in your browser settings, then try again.",
+    "unsupported": "This browser doesn't support notifications.",
+    "installFirst": "On iPhone and iPad, first add this app to your Home Screen (Share → Add to Home Screen), then open it from there.",
+    "serverOff": "Notifications aren't set up on the server yet.",
+    "devOnly": "Notifications work in the installed app (production build), not in development mode."
+  },
+  "install": {
+    "title": "Install the app",
+    "body": "Open it from your home screen like any other app. Faster, and works offline.",
+    "install": "Install",
+    "notNow": "Not now",
+    "howTo": "How to install",
+    "iosTitle": "Add to your Home Screen",
+    "iosStep1": "Tap the Share button in Safari.",
+    "iosStep2": "Scroll down and tap “Add to Home Screen”.",
+    "iosStep3": "Tap “Add”, then open the app from your Home Screen.",
+    "iosNote": "Use Safari. On iPad, the Share button is at the top of the screen.",
+    "gotIt": "Got it"
+  }
+}

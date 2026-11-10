@@ -1,0 +1,140 @@
+{
+  "title": "Admin",
+  "signOut": "Sign out",
+  "nav": {
+    "label": "Admin sections",
+    "requests": "Requests",
+    "colors": "Colors",
+    "settings": "Settings",
+    "newBadge": "{{count}} new"
+  },
+  "actions": {
+    "save": "Save",
+    "saving": "Saving…",
+    "saved": "Saved",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "add": "Add",
+    "edit": "Edit",
+    "close": "Close"
+  },
+  "login": {
+    "title": "Admin sign in",
+    "description": "Manage your colors and quote requests.",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Sign in",
+    "submitting": "Signing in…"
+  },
+  "status": {
+    "new": "New",
+    "contacted": "Contacted",
+    "quoted": "Quoted",
+    "won": "Won",
+    "lost": "Lost"
+  },
+  "requests": {
+    "title": "Quote requests",
+    "all": "All",
+    "empty": "No requests yet. Share your link or QR code to get started.",
+    "areas_one": "{{count}} area",
+    "areas_other": "{{count}} areas",
+    "notOpened": "WhatsApp not opened",
+    "opened": "WhatsApp opened",
+    "back": "All requests",
+    "client": "Client",
+    "phone": "Phone",
+    "address": "Address",
+    "property": "Property",
+    "dates": "Preferred dates",
+    "notes": "Client notes",
+    "whatsapp": "Reply on WhatsApp",
+    "call": "Call",
+    "areasTitle": "Areas",
+    "previewTitle": "Preview",
+    "originalTitle": "Original photo",
+    "adminNotes": "Your private notes",
+    "statusLabel": "Status",
+    "received": "Received",
+    "noPhotos": "No photos",
+    "size": "{{size}} sqft",
+    "interior": "Inside",
+    "exterior": "Outside",
+    "furnished": "Furnished",
+    "waGreeting": "Hi {{name}}, this is {{business}}. Thanks for your painting quote request!",
+    "notFound": "This request no longer exists.",
+    "delete": "Delete this request",
+    "deleteTitle": "Delete request",
+    "deleteHelp": "Permanently removes this request and all its photos. Use this if the client asks for their details to be deleted. This can't be undone.",
+    "deleteConfirm": "Delete the request from {{name}} and all its photos? This can't be undone."
+  },
+  "colors": {
+    "title": "Color palette",
+    "description": "These are the colors clients can choose from.",
+    "add": "Add color",
+    "edit": "Edit color",
+    "empty": "No colors yet. Add your first color.",
+    "name": "Name",
+    "code": "Code (optional)",
+    "hex": "Color (HEX)",
+    "family": "Family",
+    "finish": "Finish",
+    "collection": "Collection (optional)",
+    "visible": "Visible to clients",
+    "hidden": "Hidden",
+    "families": {
+      "all": "All",
+      "white": "White",
+      "grey": "Grey",
+      "beige": "Beige",
+      "yellow": "Yellow",
+      "orange": "Orange",
+      "red": "Red",
+      "pink": "Pink",
+      "purple": "Purple",
+      "blue": "Blue",
+      "green": "Green",
+      "brown": "Brown",
+      "black": "Black"
+    },
+    "finishes": {
+      "matt": "Matt",
+      "satin": "Satin",
+      "gloss": "Gloss"
+    },
+    "deleteConfirm": "Delete “{{name}}”? Past requests keep their copy of this color.",
+    "import": "Import from CSV",
+    "importHelp": "One color per line: name, hex, code (optional), finish (optional), collection (optional). The color family is guessed from the HEX.",
+    "importPlaceholder": "Sea Salt, #D4DCD4, SW 6204\nNavy, #1F2A55, , satin",
+    "importButton": "Import",
+    "imported": "Imported {{count}} color(s).",
+    "importNone": "No valid lines found.",
+    "importSkipped": "Skipped {{count}} invalid line(s).",
+    "hexInvalid": "Use the format #RRGGBB."
+  },
+  "settings": {
+    "title": "Settings",
+    "business": {
+      "title": "Business",
+      "name": "Business name",
+      "whatsapp": "WhatsApp number",
+      "whatsappHelp": "Requests are sent to this number. Example: 012-345 6789",
+      "notSet": "Set this so clients can send requests to you on WhatsApp."
+    },
+    "link": {
+      "title": "Your booking link",
+      "description": "Share this link or print it as a QR code.",
+      "copy": "Copy link",
+      "copied": "Copied"
+    },
+    "notifications": {
+      "title": "Notifications",
+      "description": "Get a notification on this device when a new request arrives.",
+      "enable": "Turn on notifications",
+      "disable": "Turn off",
+      "on": "Notifications are on for this device.",
+      "test": "Send test",
+      "testSent": "Test sent."
+    }
+  }
+}

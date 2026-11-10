@@ -1,0 +1,226 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+
+/* Don't generate classes from AI-agent skill examples that live next to the app. */
+@source not '../.agents';
+@source not '../.claude';
+
+/*
+ * Tenang design tokens — source: ./styles/tokens.json (a test checks the colours match).
+ *
+ * Colours follow the phone's light/dark setting (Tailwind's default `dark:` variant is
+ * prefers-color-scheme, so no custom variant is needed).
+ *
+ * Naming: every Tenang token is a utility with its own name (bg-surface-100, text-ink,
+ * bg-brand, text-brand-text, …), except Tenang's `accent` family, which is exposed as
+ * `clay` (bg-clay, text-on-clay, bg-clay-soft, text-clay-text). shadcn components use
+ * `accent` for hover tints, so shadcn's `accent` stays the soft blue (`brand-soft`).
+ */
+
+/* ── Raw Tenang colours ─────────────────────────────── */
+:root {
+  --surface-100: #f8f4ec;
+  --surface-200: #efe8db;
+  --surface-card: #fffdf9;
+  --ink: #1f2a27;
+  --ink-muted: #55625d;
+  --line: #d8cfbe;
+  --border-strong: #8a8272;
+  --brand: #6a9bd1;
+  --on-brand: #10203a;
+  --brand-text: #2f5f93;
+  --brand-soft: #dde9f6;
+  --clay: #e0a37f; /* Tenang: accent */
+  --on-clay: #1f2a27; /* Tenang: on-accent */
+  --clay-soft: #f5e1d3; /* Tenang: accent-soft */
+  --clay-text: #8f4426; /* Tenang: accent-text */
+  --danger: #a3362b;
+  --on-danger: #fffdf9;
+  --danger-soft: #f6dcd8;
+  --ring-color: #1f2a27; /* Tenang: ring */
+  --shadow-soft-value: 0 1px 2px rgba(31, 42, 39, 0.06), 0 8px 24px rgba(31, 42, 39, 0.08);
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --surface-100: #151c1a;
+    --surface-200: #1e2724;
+    --surface-card: #232e2a;
+    --ink: #eee8dc;
+    --ink-muted: #a9b5af;
+    --line: #34413c;
+    --border-strong: #7f8d86;
+    --brand: #8fb6e3;
+    --on-brand: #10203a;
+    --brand-text: #8fb6e3;
+    --brand-soft: #1f3047;
+    --clay: #e0a37f;
+    --on-clay: #1f2a27;
+    --clay-soft: #3a2a21;
+    --clay-text: #efb996;
+    --danger: #f0a79d;
+    --on-danger: #2a1210;
+    --danger-soft: #3b2220;
+    --ring-color: #f3ece3;
+    /* Cards are flat in dark mode; the `line` outline separates them. */
+    --shadow-soft-value: none;
+    color-scheme: dark;
+  }
+}
+
+/* ── shadcn semantic colours, mapped onto Tenang ────── */
+:root {
+  --background: var(--surface-100);
+  --foreground: var(--ink);
+  --card: var(--surface-card);
+  --card-foreground: var(--ink);
+  --popover: var(--surface-card);
+  --popover-foreground: var(--ink);
+  --primary: var(--brand);
+  --primary-foreground: var(--on-brand);
+  --secondary: var(--surface-200);
+  --secondary-foreground: var(--ink);
+  --muted: var(--surface-200);
+  --muted-foreground: var(--ink-muted);
+  --accent: var(--brand-soft); /* hover / selected tint */
+  --accent-foreground: var(--ink);
+  --destructive: var(--danger);
+  --destructive-foreground: var(--on-danger);
+  --border: var(--line);
+  --input: var(--border-strong);
+  --ring: var(--ring-color);
+  --chart-1: var(--brand);
+  --chart-2: var(--clay);
+  --chart-3: var(--brand-text);
+  --chart-4: var(--border-strong);
+  --chart-5: var(--ink);
+  --sidebar: var(--surface-card);
+  --sidebar-foreground: var(--ink);
+  --sidebar-primary: var(--brand);
+  --sidebar-primary-foreground: var(--on-brand);
+  --sidebar-accent: var(--brand-soft);
+  --sidebar-accent-foreground: var(--ink);
+  --sidebar-border: var(--line);
+  --sidebar-ring: var(--ring-color);
+}
+
+@theme inline {
+  /* Type families */
+  --font-sans: 'Figtree', system-ui, sans-serif;
+  --font-display: 'Fraunces', Georgia, serif;
+
+  /* Type styles: text-display-lg, text-display-md (pair with font-display), text-title,
+     text-body, text-body-sm, text-label, text-time, text-caption */
+  --text-display-lg: 40px;
+  --text-display-lg--line-height: 44px;
+  --text-display-lg--font-weight: 500;
+  --text-display-md: 30px;
+  --text-display-md--line-height: 36px;
+  --text-display-md--font-weight: 500;
+  --text-title: 20px;
+  --text-title--line-height: 28px;
+  --text-title--font-weight: 600;
+  --text-body: 16px;
+  --text-body--line-height: 24px;
+  --text-body--font-weight: 400;
+  --text-body-sm: 14px;
+  --text-body-sm--line-height: 20px;
+  --text-body-sm--font-weight: 400;
+  --text-label: 14px;
+  --text-label--line-height: 20px;
+  --text-label--font-weight: 600;
+  --text-time: 18px;
+  --text-time--line-height: 24px;
+  --text-time--font-weight: 600;
+  --text-caption: 12px;
+  --text-caption--line-height: 16px;
+  --text-caption--font-weight: 500;
+
+  /* Radius: rounded-sm 8 (chips) · rounded-md 14 (inputs, slots) · rounded-lg 20 (cards)
+     · rounded-xl 28 (sheets) · rounded-pill / rounded-full (buttons, badges) */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-pill: 999px;
+
+  /* Shadow: shadow-soft (cards on surface-100; none in dark mode) */
+  --shadow-soft: var(--shadow-soft-value);
+
+  /* Touch: min-h-tap / h-tap = 48px (buttons, inputs, time slots).
+     Tenang spacing (4px steps) already matches Tailwind's scale: gap-3 = 12px, px-4 = 16px. */
+  --spacing-tap: 48px;
+
+  /* Tenang colours */
+  --color-surface-100: var(--surface-100);
+  --color-surface-200: var(--surface-200);
+  --color-surface-card: var(--surface-card);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-line: var(--line);
+  --color-border-strong: var(--border-strong);
+  --color-brand: var(--brand);
+  --color-on-brand: var(--on-brand);
+  --color-brand-text: var(--brand-text);
+  --color-brand-soft: var(--brand-soft);
+  --color-clay: var(--clay);
+  --color-on-clay: var(--on-clay);
+  --color-clay-soft: var(--clay-soft);
+  --color-clay-text: var(--clay-text);
+  --color-danger: var(--danger);
+  --color-on-danger: var(--on-danger);
+  --color-danger-soft: var(--danger-soft);
+
+  /* shadcn semantic colours */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-background font-sans text-body text-foreground antialiased;
+  }
+  /* Tenang focus ring: 3px solid, 2px offset, on every focusable element. */
+  :focus-visible {
+    outline: 3px solid var(--ring);
+    outline-offset: 2px;
+  }
+}

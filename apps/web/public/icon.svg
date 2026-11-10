@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Tenang: sand background, sky-blue lotus, clay water line -->
+  <rect width="512" height="512" rx="112" fill="#f8f4ec"/>
+  <g fill="#6a9bd1">
+    <path d="M256 112c46 58 52 140 0 222-52-82-46-164 0-222z"/>
+    <path d="M256 334c-62-22-112-74-124-152 64 6 112 58 124 152z" opacity=".8"/>
+    <path d="M256 334c62-22 112-74 124-152-64 6-112 58-124 152z" opacity=".8"/>
+  </g>
+  <path d="M146 382q110 34 220 0" fill="none" stroke="#e0a37f" stroke-width="20" stroke-linecap="round"/>
+</svg>

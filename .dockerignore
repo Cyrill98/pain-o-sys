@@ -1,0 +1,12 @@
+**/node_modules
+**/dist
+**/dev-dist
+**/coverage
+.git
+.env
+.env.*
+!.env.example
+.claude
+*.log
+apps/web/phase0-photos
+data

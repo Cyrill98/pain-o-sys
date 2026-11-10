@@ -1,0 +1,17 @@
+{
+  "BAD_ORIGIN": "This request was blocked for security reasons. Please reload the page.",
+  "CAPTCHA_FAILED": "The security check didn't work. Please try again.",
+  "INTERNAL_ERROR": "Something went wrong on our side. Please try again.",
+  "INVALID_CREDENTIALS": "Wrong email or password.",
+  "INVALID_INPUT": "Please check the details you entered.",
+  "INVALID_JSON": "Something went wrong. Please reload the page and try again.",
+  "INVALID_PHONE": "Please enter a valid phone number, e.g. 012-345 6789.",
+  "INVALID_IMAGE": "That photo couldn't be used. Please choose a JPG, PNG or WebP image.",
+  "NOT_FOUND": "We couldn't find that.",
+  "TOO_LARGE": "That file is too large. Please choose a smaller photo.",
+  "TOO_MANY_ATTEMPTS": "Too many attempts. Please wait 15 minutes and try again.",
+  "TOO_MANY_REQUESTS": "Too many tries. Please wait a few minutes and try again.",
+  "UNAUTHENTICATED": "Please sign in again.",
+  "NETWORK": "Can't connect. Check your internet connection and try again.",
+  "UNKNOWN": "Something went wrong. Please try again."
+}

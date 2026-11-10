@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Phase 0c: SlimSAM test (dev only)</title>
+    <style>
+      body {
+        margin: 0;
+        font:
+          13px system-ui,
+          sans-serif;
+        background: #fff;
+        color: #111;
+      }
+      h1 {
+        font-size: 16px;
+        margin: 8px;
+      }
+      #status {
+        margin: 0 8px 8px;
+        color: #555;
+      }
+      .row {
+        display: grid;
+        grid-template-columns: 24px repeat(4, 1fr);
+        gap: 4px;
+        margin: 0 4px 6px;
+        align-items: start;
+      }
+      .row canvas {
+        width: 100%;
+        height: auto;
+        display: block;
+        background: #eee;
+      }
+      .n {
+        font-weight: 700;
+      }
+      .meta {
+        grid-column: 2 / -1;
+        color: #555;
+        margin-top: -2px;
+      }
+      .head {
+        display: grid;
+        grid-template-columns: 24px repeat(4, 1fr);
+        gap: 4px;
+        margin: 0 4px;
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Phase 0c: SlimSAM (Apache-2.0) vs tap-select (dev only)</h1>
+    <div id="status">Loading model…</div>
+    <div class="head">
+      <span></span><span>Original</span><span>Tap-select (color)</span><span>SegFormer</span
+      ><span>SegFormer ∩ color</span>
+    </div>
+    <div id="out"></div>
+    <script type="module" src="/src/phase0/sam.ts"></script>
+  </body>
+</html>

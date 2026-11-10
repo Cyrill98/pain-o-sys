@@ -1,0 +1,17 @@
+{
+  "BAD_ORIGIN": "Permintaan ini disekat atas sebab keselamatan. Sila muat semula halaman.",
+  "CAPTCHA_FAILED": "Semakan keselamatan gagal. Sila cuba lagi.",
+  "INTERNAL_ERROR": "Berlaku masalah pada pihak kami. Sila cuba lagi.",
+  "INVALID_CREDENTIALS": "E-mel atau kata laluan salah.",
+  "INVALID_INPUT": "Sila semak butiran yang anda masukkan.",
+  "INVALID_JSON": "Berlaku masalah. Sila muat semula halaman dan cuba lagi.",
+  "INVALID_PHONE": "Sila masukkan nombor telefon yang sah, cth. 012-345 6789.",
+  "INVALID_IMAGE": "Gambar itu tidak dapat digunakan. Sila pilih imej JPG, PNG atau WebP.",
+  "NOT_FOUND": "Kami tidak dapat menjumpainya.",
+  "TOO_LARGE": "Fail itu terlalu besar. Sila pilih gambar yang lebih kecil.",
+  "TOO_MANY_ATTEMPTS": "Terlalu banyak percubaan. Sila tunggu 15 minit dan cuba lagi.",
+  "TOO_MANY_REQUESTS": "Terlalu banyak percubaan. Sila tunggu beberapa minit dan cuba lagi.",
+  "UNAUTHENTICATED": "Sila log masuk semula.",
+  "NETWORK": "Tidak dapat bersambung. Semak sambungan internet anda dan cuba lagi.",
+  "UNKNOWN": "Berlaku masalah. Sila cuba lagi."
+}

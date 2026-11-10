@@ -1,0 +1,140 @@
+{
+  "title": "Admin",
+  "signOut": "Log keluar",
+  "nav": {
+    "label": "Bahagian admin",
+    "requests": "Permintaan",
+    "colors": "Warna",
+    "settings": "Tetapan",
+    "newBadge": "{{count}} baharu"
+  },
+  "actions": {
+    "save": "Simpan",
+    "saving": "Menyimpan…",
+    "saved": "Disimpan",
+    "cancel": "Batal",
+    "delete": "Padam",
+    "add": "Tambah",
+    "edit": "Ubah",
+    "close": "Tutup"
+  },
+  "login": {
+    "title": "Log masuk admin",
+    "description": "Urus warna dan permintaan sebut harga anda.",
+    "email": "E-mel",
+    "password": "Kata laluan",
+    "submit": "Log masuk",
+    "submitting": "Sedang log masuk…"
+  },
+  "status": {
+    "new": "Baharu",
+    "contacted": "Dihubungi",
+    "quoted": "Disebut harga",
+    "won": "Berjaya",
+    "lost": "Tidak jadi"
+  },
+  "requests": {
+    "title": "Permintaan sebut harga",
+    "all": "Semua",
+    "empty": "Belum ada permintaan. Kongsi pautan atau kod QR anda untuk bermula.",
+    "areas_one": "{{count}} kawasan",
+    "areas_other": "{{count}} kawasan",
+    "notOpened": "WhatsApp belum dibuka",
+    "opened": "WhatsApp dibuka",
+    "back": "Semua permintaan",
+    "client": "Pelanggan",
+    "phone": "Telefon",
+    "address": "Alamat",
+    "property": "Hartanah",
+    "dates": "Tarikh pilihan",
+    "notes": "Catatan pelanggan",
+    "whatsapp": "Balas di WhatsApp",
+    "call": "Telefon",
+    "areasTitle": "Kawasan",
+    "previewTitle": "Pratonton",
+    "originalTitle": "Gambar asal",
+    "adminNotes": "Catatan peribadi anda",
+    "statusLabel": "Status",
+    "received": "Diterima",
+    "noPhotos": "Tiada gambar",
+    "size": "{{size}} kps",
+    "interior": "Dalam",
+    "exterior": "Luar",
+    "furnished": "Berperabot",
+    "waGreeting": "Hai {{name}}, ini {{business}}. Terima kasih atas permintaan sebut harga mengecat anda!",
+    "notFound": "Permintaan ini sudah tidak wujud.",
+    "delete": "Padam permintaan ini",
+    "deleteTitle": "Padam permintaan",
+    "deleteHelp": "Memadam permintaan ini dan semua gambarnya secara kekal. Gunakan ini jika pelanggan meminta butiran mereka dipadam. Ini tidak boleh dibuat asal.",
+    "deleteConfirm": "Padam permintaan daripada {{name}} dan semua gambarnya? Ini tidak boleh dibuat asal."
+  },
+  "colors": {
+    "title": "Palet warna",
+    "description": "Ini ialah warna yang boleh dipilih oleh pelanggan.",
+    "add": "Tambah warna",
+    "edit": "Ubah warna",
+    "empty": "Belum ada warna. Tambah warna pertama anda.",
+    "name": "Nama",
+    "code": "Kod (pilihan)",
+    "hex": "Warna (HEX)",
+    "family": "Kumpulan",
+    "finish": "Kemasan",
+    "collection": "Koleksi (pilihan)",
+    "visible": "Dipaparkan kepada pelanggan",
+    "hidden": "Tersembunyi",
+    "families": {
+      "all": "Semua",
+      "white": "Putih",
+      "grey": "Kelabu",
+      "beige": "Beige",
+      "yellow": "Kuning",
+      "orange": "Oren",
+      "red": "Merah",
+      "pink": "Merah jambu",
+      "purple": "Ungu",
+      "blue": "Biru",
+      "green": "Hijau",
+      "brown": "Perang",
+      "black": "Hitam"
+    },
+    "finishes": {
+      "matt": "Matt",
+      "satin": "Satin",
+      "gloss": "Berkilat"
+    },
+    "deleteConfirm": "Padam “{{name}}”? Permintaan lepas masih menyimpan salinan warna ini.",
+    "import": "Import dari CSV",
+    "importHelp": "Satu warna setiap baris: nama, hex, kod (pilihan), kemasan (pilihan), koleksi (pilihan). Kumpulan warna diagak daripada HEX.",
+    "importPlaceholder": "Sea Salt, #D4DCD4, SW 6204\nNavy, #1F2A55, , satin",
+    "importButton": "Import",
+    "imported": "{{count}} warna diimport.",
+    "importNone": "Tiada baris sah dijumpai.",
+    "importSkipped": "{{count}} baris tidak sah dilangkau.",
+    "hexInvalid": "Gunakan format #RRGGBB."
+  },
+  "settings": {
+    "title": "Tetapan",
+    "business": {
+      "title": "Perniagaan",
+      "name": "Nama perniagaan",
+      "whatsapp": "Nombor WhatsApp",
+      "whatsappHelp": "Permintaan dihantar ke nombor ini. Contoh: 012-345 6789",
+      "notSet": "Tetapkan ini supaya pelanggan boleh menghantar permintaan kepada anda melalui WhatsApp."
+    },
+    "link": {
+      "title": "Pautan tempahan anda",
+      "description": "Kongsi pautan ini atau cetak sebagai kod QR.",
+      "copy": "Salin pautan",
+      "copied": "Disalin"
+    },
+    "notifications": {
+      "title": "Pemberitahuan",
+      "description": "Terima pemberitahuan pada peranti ini apabila permintaan baharu tiba.",
+      "enable": "Hidupkan pemberitahuan",
+      "disable": "Matikan",
+      "on": "Pemberitahuan dihidupkan untuk peranti ini.",
+      "test": "Hantar ujian",
+      "testSent": "Ujian dihantar."
+    }
+  }
+}

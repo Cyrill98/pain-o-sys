@@ -1,0 +1,55 @@
+{
+  "appName": "Sebut Harga Mengecat",
+  "loading": "Memuatkan…",
+  "back": "Kembali",
+  "next": "Seterusnya",
+  "language": {
+    "label": "Bahasa",
+    "short": {
+      "en": "EN",
+      "ms": "BM"
+    },
+    "name": {
+      "en": "English",
+      "ms": "Bahasa Melayu"
+    }
+  },
+  "notFound": {
+    "title": "Halaman tidak dijumpai",
+    "home": "Pergi ke halaman utama"
+  },
+  "home": {
+    "headline": "Lihat dinding anda dalam warna baharu sebelum mengecat",
+    "sub": "Cuba warna kami pada gambar bilik anda sendiri, kemudian hantar permintaan melalui WhatsApp untuk sebut harga percuma.",
+    "cta": "Mulakan permintaan sebut harga",
+    "step1": "Beritahu kami apa yang ingin dicat",
+    "step2": "Pilih warna dan lihat pratonton pada dinding anda",
+    "step3": "Hantar permintaan kepada kami melalui WhatsApp",
+    "privacy": "Notis privasi"
+  },
+  "pwa": {
+    "offline": "Anda di luar talian. Menghantar permintaan memerlukan sambungan internet.",
+    "update": "Versi baharu tersedia.",
+    "reload": "Muat semula"
+  },
+  "push": {
+    "denied": "Pemberitahuan disekat untuk laman ini. Benarkan dalam tetapan pelayar, kemudian cuba lagi.",
+    "unsupported": "Pelayar ini tidak menyokong pemberitahuan.",
+    "installFirst": "Pada iPhone dan iPad, tambah aplikasi ini ke Skrin Utama dahulu (Kongsi → Tambah ke Skrin Utama), kemudian buka dari situ.",
+    "serverOff": "Pemberitahuan belum disediakan pada pelayan.",
+    "devOnly": "Pemberitahuan berfungsi dalam aplikasi yang dipasang (versi produksi), bukan dalam mod pembangunan."
+  },
+  "install": {
+    "title": "Pasang aplikasi",
+    "body": "Buka dari skrin utama seperti aplikasi lain. Lebih pantas dan boleh digunakan tanpa talian.",
+    "install": "Pasang",
+    "notNow": "Bukan sekarang",
+    "howTo": "Cara memasang",
+    "iosTitle": "Tambah ke Skrin Utama",
+    "iosStep1": "Ketik butang Kongsi dalam Safari.",
+    "iosStep2": "Tatal ke bawah dan ketik “Tambah ke Skrin Utama”.",
+    "iosStep3": "Ketik “Tambah”, kemudian buka aplikasi dari Skrin Utama.",
+    "iosNote": "Gunakan Safari. Pada iPad, butang Kongsi berada di bahagian atas skrin.",
+    "gotIt": "Faham"
+  }
+}

@@ -1,0 +1,10 @@
+node_modules
+dist
+dev-dist
+coverage
+package-lock.json
+.agents
+.claude
+skills-lock.json
+apps/web/public/ort
+apps/web/public/models

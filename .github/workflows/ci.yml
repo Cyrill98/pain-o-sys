@@ -1,0 +1,71 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Checks, tests and build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: painting
+          POSTGRES_PASSWORD: painting
+          POSTGRES_DB: painting
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U painting -d painting"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # The wall-selection model files (about 33 MB) are downloaded by the build; keep them
+      # between runs. The key changes when the pinned model revision changes.
+      - uses: actions/cache@v4
+        with:
+          path: apps/web/public/models
+          key: models-${{ hashFiles('apps/web/scripts/fetch-models.mjs') }}
+
+      - run: npm ci
+      - run: npm run format:check
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
+
+      - name: Database tests
+        run: npm run test:db
+        env:
+          TEST_DATABASE_URL: postgres://painting:painting@localhost:5432/painting_test
+
+      - run: npm run build
+
+  docker:
+    name: Docker image builds
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the production image
+        run: docker build --tag painting-system:ci .
+      - name: Image size
+        run: docker image ls painting-system:ci
